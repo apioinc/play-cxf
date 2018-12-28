@@ -34,9 +34,7 @@ class CxfController extends InjectedController with FactoryBean[CxfController] {
    */
   var transportFactory: PlayTransportFactory = null
 
-  val maxRequestSize = 1024 * 1024
-
-  def handle(path: String) = Action.async(parse.raw(maxRequestSize)) { implicit request =>
+  def handle(path: String) = Action.async(parse.raw) { implicit request =>
     val delayedOutput = new DelayedOutputStream
     val replyPromise: Promise[Message] = Promise.apply()
     dispatchMessage(extractMessage, delayedOutput, replyPromise)
